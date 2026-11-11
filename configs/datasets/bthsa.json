@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "dataset": "BTHSA",
+  "manifest_path": "manifests/bthsa.json",
+  "source": {
+    "data_path": "data/BTHSA/dataset_bthsa.nc",
+    "stations_path": "data/BTHSA/stations_bthsa.csv"
+  },
+  "selection": {
+    "target_variable": "PM2.5"
+  },
+  "qc_mssm_spatial": {
+    "history_met_variables": [
+      "O3",
+      "t2m",
+      "d2m",
+      "tp",
+      "sp",
+      "blh",
+      "msdwswrf",
+      "u100",
+      "v100"
+    ],
+    "wind_uv_variables": [
+      "u100",
+      "v100"
+    ],
+    "coordinate_columns": {
+      "longitude": "lon",
+      "latitude": "lat"
+    },
+    "projection": {
+      "method": "local_equirectangular",
+      "input_order": [
+        "longitude",
+        "latitude"
+      ],
+      "output_order": [
+        "east",
+        "north"
+      ],
+      "output_units": "km",
+      "center_longitude": 115.508657895,
+      "center_latitude": 37.419789474,
+      "earth_radius_km": 6371.0088,
+      "longitude_range": [
+        112.0,
+        119.0
+      ],
+      "latitude_range": [
+        34.0,
+        41.0
+      ]
+    },
+    "neighbor_count": 4
+  },
+  "sampling": {
+    "interval_hours": 1,
+    "start_time": "2016-01-01 00:00:00",
+    "end_time": "2023-12-31 23:00:00"
+  },
+  "protocol": {
+    "split_ratios": {
+      "train": 0.7,
+      "validation": 0.1,
+      "test": 0.2
+    },
+    "window": {
+      "history_steps": 24,
+      "history_hours": 24,
+      "prediction_steps": 24,
+      "prediction_hours": 24,
+      "split_boundary_policy": "target_interval_in_split_history_may_precede_boundary"
+    },
+    "mask_policy": "finite_observation_mask_zero_is_valid",
+    "scaler": "global_per_feature_standard_train_only_finite_population",
+    "loader": {
+      "batch_size": 64,
+      "seed": 2024,
+      "num_workers": 0,
+      "drop_last_train": true
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "dataset": "GansuAir",
+  "manifest_path": "manifests/gansuair.json",
+  "source": {
+    "raw_data_path": "data/gansuair/Gansu_Air_raw.csv",
+    "meteorology_path": "data/gansuair/meteo_physics_first.npy",
+    "meteorology_columns_path": "data/gansuair/meteo_physics_first_columns.json",
+    "meteorology_station_order_path": "data/gansuair/meteo_physics_first_station_order.json",
+    "meteorology_station_ids": [
+      "1476A",
+      "1478A",
+      "1479A",
+      "1943A",
+      "1945A",
+      "2647A",
+      "2648A",
+      "2650A",
+      "2651A",
+      "2652A",
+      "2654A",
+      "2655A",
+      "2657A",
+      "2659A",
+      "2662A",
+      "2664A",
+      "2667A",
+      "2669A",
+      "2884A",
+      "2885A",
+      "3201A",
+      "3247A",
+      "3380A"
+    ],
+    "coordinates_path": "data/gansuair/station_coords_physics_first.npy",
+    "coordinates_station_order_path": "data/gansuair/station_coords_physics_first_station_order.json",
+    "timestamps_path": "data/gansuair/meteo_physics_first_datetime.csv"
+  },
+  "selection": {
+    "target_variable": "PM2.5"
+  },
+  "protocol": {
+    "split_ratios": {
+      "train": 0.7,
+      "validation": 0.1,
+      "test": 0.2
+    },
+    "window": {
+      "history_steps": 24,
+      "history_hours": 24,
+      "prediction_steps": 24,
+      "prediction_hours": 24
+    },
+    "mask_policy": "finite_observation_mask_zero_is_valid",
+    "scaler": "global_per_feature_standard_train_only_finite_population",
+    "loader": {
+      "batch_size": 16,
+      "seed": 2024,
+      "num_workers": 0,
+      "drop_last_train": true
+    }
+  },
+  "qc_mssm_spatial": {
+    "history_met_variables": [
+      "O3",
+      "t2m",
+      "d2m",
+      "sp",
+      "u10",
+      "v10"
+    ],
+    "wind_uv_variables": [
+      "u10",
+      "v10"
+    ],
+    "neighbor_count": 4,
+    "projection": {
+      "method": "local_equirectangular",
+      "center_longitude": 103.0,
+      "center_latitude": 37.0,
+      "earth_radius_km": 6371.0,
+      "input_order": [
+        "longitude",
+        "latitude"
+      ],
+      "output_order": [
+        "east",
+        "north"
+      ],
+      "output_units": "km"
+    }
+  }
+}

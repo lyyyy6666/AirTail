@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "dataset": "YRD",
+  "source_status": "KnowAir-V2 hourly regional panel; raw values, not standardized or windowed",
+  "source_doi": "10.5281/zenodo.15614907",
+  "license": "CC-BY-4.0",
+  "files": [
+    {
+      "path": "data/YRD/dataset_yrd.nc",
+      "bytes": 356830811,
+      "role": "hourly PM2.5, O3, and meteorological panel"
+    },
+    {
+      "path": "data/YRD/stations_yrd.csv",
+      "bytes": 6617,
+      "role": "station identifiers, order, and coordinates"
+    }
+  ],
+  "data": {
+    "time_range_inclusive": [
+      "2016-01-01 00:00:00",
+      "2023-12-31 23:00:00"
+    ],
+    "sampling_interval_hours": 1,
+    "raw_variable_shape": [
+      70128,
+      127
+    ],
+    "adapter_shape": [
+      70128,
+      127,
+      1
+    ],
+    "variables": [
+      "PM2.5",
+      "O3",
+      "t2m",
+      "d2m",
+      "tp",
+      "sp",
+      "blh",
+      "msdwswrf",
+      "u100",
+      "v100"
+    ],
+    "selected_features": [
+      "PM2.5"
+    ],
+    "target": "PM2.5",
+    "station_count": 127,
+    "station_order": "stations_yrd.csv row order, verified against the NetCDF station coordinate",
+    "nonfinite_selected_target": 0,
+    "observed_zero_policy": "zero is a valid finite observation"
+  },
+  "expected_protocol": {
+    "split_indices_half_open": {
+      "train": [
+        0,
+        49089
+      ],
+      "validation": [
+        49089,
+        56101
+      ],
+      "test": [
+        56101,
+        70128
+      ]
+    },
+    "split_times_inclusive": {
+      "train": [
+        "2016-01-01 00:00:00",
+        "2021-08-07 08:00:00"
+      ],
+      "validation": [
+        "2021-08-07 09:00:00",
+        "2022-05-26 12:00:00"
+      ],
+      "test": [
+        "2022-05-26 13:00:00",
+        "2023-12-31 23:00:00"
+      ]
+    },
+    "window_counts_24_to_24": {
+      "train": 49042,
+      "validation": 6989,
+      "test": 14004
+    }
+  }
+}

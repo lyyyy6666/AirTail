@@ -1,0 +1,13 @@
+/data/
+/outputs/
+/checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.log
+*.egg-info/
+__pycache__/
+.pytest_cache/
+.venv/
+build/
+dist/

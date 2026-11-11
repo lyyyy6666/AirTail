@@ -1,0 +1,6 @@
+# Runtime dependencies for AirTail.
+# Install the CUDA selective-scan extension as described in README.md.
+torch>=2.5
+numpy>=1.26
+PyYAML>=6
+h5py>=3.10

@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "dataset": "GansuAir",
+  "source_status": "Raw PM2.5/O3 panel with aligned PMO-Net physical ERA5 meteorology and station coordinates; VMD/IMF features excluded",
+  "files": [
+    {
+      "path": "data/gansuair/Gansu_Air_raw.csv",
+      "bytes": 22141797,
+      "role": "raw hourly station PM2.5 and O3 records"
+    },
+    {
+      "path": "data/gansuair/meteo_physics_first.npy",
+      "bytes": 8059328,
+      "role": "aligned physical meteorology [time,station,variable]"
+    },
+    {
+      "path": "data/gansuair/meteo_physics_first_columns.json",
+      "bytes": 52,
+      "role": "meteorology variable order"
+    },
+    {
+      "path": "data/gansuair/meteo_physics_first_station_order.json",
+      "bytes": 279,
+      "role": "meteorology station order"
+    },
+    {
+      "path": "data/gansuair/station_coords_physics_first.npy",
+      "bytes": 312,
+      "role": "station longitude/latitude coordinates"
+    },
+    {
+      "path": "data/gansuair/station_coords_physics_first_station_order.json",
+      "bytes": 279,
+      "role": "coordinate station order"
+    },
+    {
+      "path": "data/gansuair/meteo_physics_first_datetime.csv",
+      "bytes": 367930,
+      "role": "hourly timestamp alignment"
+    }
+  ],
+  "data": {
+    "time_range_inclusive": [
+      "2022-01-01 00:00:00",
+      "2023-12-31 23:00:00"
+    ],
+    "sampling_interval_hours": 1,
+    "raw_variable_shape": [
+      17520,
+      23
+    ],
+    "adapter_shape": [
+      17520,
+      23,
+      1
+    ],
+    "selected_features": [
+      "PM2.5"
+    ],
+    "target": "PM2.5",
+    "station_count": 23,
+    "station_order": "numeric stationID 0 through 22, verified against aligned meteorology/coordinate station sidecars",
+    "nonfinite_selected_target": 0,
+    "observed_zero_policy": "zero is a valid finite observation"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "dataset": "YRD",
+  "manifest_path": "manifests/yrd.json",
+  "source": {
+    "data_path": "data/YRD/dataset_yrd.nc",
+    "stations_path": "data/YRD/stations_yrd.csv"
+  },
+  "selection": {
+    "target_variable": "PM2.5"
+  },
+  "protocol": {
+    "split_ratios": {
+      "train": 0.7,
+      "validation": 0.1,
+      "test": 0.2
+    },
+    "window": {
+      "history_steps": 24,
+      "history_hours": 24,
+      "prediction_steps": 24,
+      "prediction_hours": 24
+    },
+    "mask_policy": "finite_observation_mask_zero_is_valid",
+    "scaler": "global_per_feature_standard_train_only_finite_population",
+    "loader": {
+      "batch_size": 16,
+      "seed": 2024,
+      "num_workers": 0,
+      "drop_last_train": true
+    }
+  },
+  "qc_mssm_spatial": {
+    "history_met_variables": [
+      "O3",
+      "t2m",
+      "d2m",
+      "tp",
+      "sp",
+      "blh",
+      "msdwswrf",
+      "u100",
+      "v100"
+    ],
+    "wind_uv_variables": [
+      "u100",
+      "v100"
+    ],
+    "neighbor_count": 4,
+    "projection": {
+      "method": "local_equirectangular",
+      "center_longitude": 120.0,
+      "center_latitude": 31.0,
+      "earth_radius_km": 6371.0,
+      "input_order": [
+        "longitude",
+        "latitude"
+      ],
+      "output_order": [
+        "east",
+        "north"
+      ],
+      "output_units": "km"
+    },
+    "coordinate_columns": {
+      "longitude": "lon",
+      "latitude": "lat"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+input_dim: 1
+stage: teacher
+met_dim: 9
+time_dim: 2
+num_nodes: 228
+node_emb_dim: 16
+hidden_dim: 32
+horizon: 24
+dropout: 0.0
+temporal:
+  enabled: true
+  kernels:
+  - 1
+  - 3
+  - 7
+  - 24
+spatial:
+  mode: history_directed
+  geo: true
+  wind: true
+  content: true
+  scale_conditioned: true
+  node_adaptive: true
+  geo_length_scale: 6.93
+  wind_length_scale: 18.33
+  beta_geo: 1.0
+  beta_wind: 1.0
+  beta_adaptive: 1.0
+  chunk_size: 32
+ssm:
+  backend: cuda
+  d_state: 8
+  delta_min: 0.001
+  delta_max: 0.2
+  delta_mode: scale_region_history
+  history_gamma: 1.0
+decoder:
+  scale_fusion: horizon_region
+  max_horizon: 512
+head:
+  mode: psa_evt
+  tau_u: 0.9
+  tau_max: 0.999
+  bulk_tau_max: 0.9
+  num_basis: 8
+  spline_degree: 2
+  coefficient_epsilon: 0.0001
+  second_order_rho: -1.0
+  correction_epsilon: 0.0001
+  shared_gradient_scale: 1.0
+teacher:
+  mode: relation_kd_v2
+  future_spatial: false
+  future_met_dim: 8
+  future_met_variables:
+  - t2m
+  - d2m
+  - tp
+  - sp
+  - blh
+  - msdwswrf
+  - u100
+  - v100
+distillation:
+  curve_kd: false
+  reliability_weighting: false
+  lambda_kd: 0.0
+  lambda_slope: 0.0
+taus:
+  mode: fixed
+  loss_weighting: point_equal
+  fixed:
+  - 0.5
+  - 0.75
+  - 0.9
+  - 0.925
+  - 0.95
+  - 0.975
+  - 0.99
+  report:
+  - 0.5
+  - 0.75
+  - 0.9
+  - 0.95
+  samples_per_region: 3
+optimizer:
+  name: AdamW
+  learning_rate: 0.0003
+  weight_decay: 0.0
+scheduler:
+  name: none
+training:
+  seed: 2024
+  epochs: 100
+  early_stopping_patience: 15
+  grad_clip: 1.0
+  batch_size: 16
+  microbatch_size: 8
+  amp: false
+selection:
+  split: validation
+  metric: standardized_pinball
+  mode: min
+relation_kd_v2:
+  teacher_relation_mode: cross_evidence
+  relation_encoder:
+    type: scpee
+  architecture:
+    num_heads: 4
+    token_distiller_num_layers: 1
+    dim_feedforward: 128
+    dropout: 0.0
+    activation: gelu
+    group_chunk_size: 4096
+    relation_gain_init: 1.0
+    block_gain_init: 0.0
+  student_predictor:
+    relation_rank: 8
+    mlp_hidden_dim: 32
+  distillation:
+    lambda_rel: 0.5
+    relation_warmup_epochs: 5
+    smooth_l1_beta: 1.0
+    query_region_indices:
+    - 1
+    - 2

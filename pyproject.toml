@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "airtail"
+version = "0.1.0"
+description = "Tail-aware PM2.5 quantile forecasting"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.5", "numpy>=1.26", "PyYAML>=6", "h5py>=3.10"]
+
+[project.scripts]
+airtail = "airtail.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
